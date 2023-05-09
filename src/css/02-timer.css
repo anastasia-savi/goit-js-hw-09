@@ -1,0 +1,20 @@
+.timer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100px;
+}
+span.value {
+  color: rgb(116, 202, 174);
+  width: 100%;
+  font-size: 70px;
+  padding: 5px;
+}
+.field:not(:last-child) {
+  margin-right: 20px;
+}
