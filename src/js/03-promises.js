@@ -1,41 +1,41 @@
-import { Notify } from "notiflix/build/notiflix-notify-aio";
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const refs = {
+  form: document.querySelector('form'),
   firstDelay: document.querySelector("input[name='delay']"),
   delayStep: document.querySelector("input[name='step']"),
   amount: document.querySelector("input[name='amount']"),
-  createPromisesButton: document.querySelector("button[type='submit']"),
+  // submit should not be used if form is not sent to a server for processing
+  createPromisesButton: document.querySelector('button[type=button]'),
 };
-refs.createPromisesButton.addEventListener("click", createPromise);
 
-let delay = null;
-let position = null;
+refs.createPromisesButton.addEventListener('click', onClick);
+
+function onClick() {
+  const delay = Number(refs.firstDelay.value);
+  const step = Number(refs.delayStep.value);
+  const amount = Number(refs.amount.value);
+
+  for (let i = 0; i < amount; i++) {
+    createPromise(i + 1, i * step + delay)
+      .then(({ position, delay }) => {
+        Notify.info(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      })
+      .catch(({ position, delay }) => {
+        Notify.info(`❌ Rejected promise ${position} in ${delay}ms`);
+      });
+  }
+}
 
 function createPromise(position, delay) {
-  delay = refs.firstDelay.value + refs.delayStep.value;
-  position = refs.amount.value;
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
-    let interval = setInterval(() => {
-      let counter = 0;
+    setTimeout(() => {
       if (shouldResolve) {
-        resolve("yes");
-        counter++;
+        resolve({ position, delay });
       } else {
-        reject("no");
-        counter++;
+        reject({ position, delay });
       }
     }, delay);
-    if (counter === position) {
-      clearInterval(interval);
-    }
   });
 }
-console.log({ position, delay });
-createPromise()
-  .then(({ position, delay }) => {
-    Notify.info(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  })
-  .catch(({ position, delay }) => {
-    Notify.info(`❌ Rejected promise ${position} in ${delay}ms`);
-  });
