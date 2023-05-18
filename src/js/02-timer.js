@@ -1,19 +1,19 @@
-import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.min.css";
-import { Notify } from "notiflix/build/notiflix-notify-aio";
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const refs = {
-  startBtn: document.querySelector("button[data-start]"),
-  days: document.querySelector("span[data-days]"),
-  hours: document.querySelector("span[data-hours]"),
-  minutes: document.querySelector("span[data-minutes]"),
-  seconds: document.querySelector("span[data-seconds]"),
+  startBtn: document.querySelector('button[data-start]'),
+  days: document.querySelector('span[data-days]'),
+  hours: document.querySelector('span[data-hours]'),
+  minutes: document.querySelector('span[data-minutes]'),
+  seconds: document.querySelector('span[data-seconds]'),
 };
-refs.startBtn.addEventListener("click", onStartBtnClick);
+refs.startBtn.addEventListener('click', onStartBtnClick);
 function onStartBtnClick() {
   timer.start();
 }
-let chooseDate = "";
+let chooseDate = '';
 let currentTime = Date.now();
 refs.startBtn.disabled = true;
 const options = {
@@ -28,12 +28,12 @@ const options = {
     if (chooseDate > currentTime) {
       refs.startBtn.disabled = false;
     } else {
-      return Notify.info("Please choose a date in the future");
+      return Notify.info('Please choose a date in the future');
     }
   },
 };
 
-const flatpickr = flatpickr("input#datetime-picker", options);
+const calendar = flatpickr('input#datetime-picker', options);
 
 const timer = {
   intervalID: null,
@@ -65,7 +65,7 @@ const timer = {
 };
 
 function addLeadingZero(value) {
-  return String(value).padStart(2, "0");
+  return String(value).padStart(2, '0');
 }
 
 function convertMs(ms) {
