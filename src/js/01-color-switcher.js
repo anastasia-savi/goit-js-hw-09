@@ -1,9 +1,10 @@
-const body = document.querySelector("body");
-const buttonStart = document.querySelector("button[data-start]");
-const buttonStop = document.querySelector("button[data-stop]");
+const body = document.querySelector('body');
+const buttonStart = document.querySelector('button[data-start]');
+const buttonStop = document.querySelector('button[data-stop]');
 let timerId = null;
-buttonStart.addEventListener("click", onButttonStartClick);
-buttonStop.addEventListener("click", onButttonStopClick);
+buttonStart.addEventListener('click', onButttonStartClick);
+buttonStop.addEventListener('click', onButttonStopClick);
+buttonStop.disabled = true;
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)
     .toString(16)

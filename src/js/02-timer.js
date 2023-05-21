@@ -22,9 +22,9 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    chooseDate1 = selectedDates[0];
-    console.log(chooseDate1);
-    chooseDate = chooseDate1.getTime();
+    chooseDate = selectedDates[0];
+    console.log(chooseDate);
+    chooseDate = chooseDate.getTime();
     if (chooseDate > currentTime) {
       refs.startBtn.disabled = false;
     } else {

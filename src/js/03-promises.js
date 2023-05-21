@@ -1,7 +1,7 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const refs = {
-  form: document.querySelector('form'),
+  form: document.querySelector('.form'),
   firstDelay: document.querySelector("input[name='delay']"),
   delayStep: document.querySelector("input[name='step']"),
   amount: document.querySelector("input[name='amount']"),
@@ -9,9 +9,10 @@ const refs = {
   createPromisesButton: document.querySelector('button[type=button]'),
 };
 
-refs.createPromisesButton.addEventListener('click', onClick);
+refs.form.addEventListener('submit', onFormSubmit);
 
-function onClick() {
+function onFormSubmit(event) {
+  event.preventDefault();
   const delay = Number(refs.firstDelay.value);
   const step = Number(refs.delayStep.value);
   const amount = Number(refs.amount.value);
@@ -19,12 +20,17 @@ function onClick() {
   for (let i = 0; i < amount; i++) {
     createPromise(i + 1, i * step + delay)
       .then(({ position, delay }) => {
-        Notify.info(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {
-        Notify.info(`❌ Rejected promise ${position} in ${delay}ms`);
+        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
   }
+
+  if (delay.value === '' || step.value === '' || amount.value === '') {
+    return console.log('Please fill in all the fields!');
+  }
+  event.currentTarget.reset();
 }
 
 function createPromise(position, delay) {
