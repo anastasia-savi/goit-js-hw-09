@@ -44,8 +44,10 @@ const timer = {
     }
 
     if (chooseDate > currentTime) {
-      this.isActive = true;
+      refs.startBtn.disabled = true;
+      this.isActive = false;
       this.intervalID = setInterval(() => {
+        refs.startBtn.disabled = true;
         currentTime = Date.now();
         const ms = chooseDate - currentTime;
         if (ms < 0) {
